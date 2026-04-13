@@ -1,0 +1,34 @@
+@Library.Api_HostAddress = http://localhost:5118
+
+GET {{Library.Api_HostAddress}}/api/books
+Accept: application/json
+
+###
+
+POST {{Library.Api_HostAddress}}/api/books
+Content-Type: application/json
+
+{
+  "title": "Clean Architecture in Practice",
+  "isbn": "9788399999999",
+  "publishedYear": 2024,
+  "totalCopies": 5,
+  "authorFirstName": "Robert",
+  "authorLastName": "Martin"
+}
+
+###
+
+POST {{Library.Api_HostAddress}}/api/readers
+Content-Type: application/json
+
+{
+  "firstName": "Maria",
+  "lastName": "Wisniewska",
+  "email": "maria.wisniewska@example.com"
+}
+
+###
+
+GET {{Library.Api_HostAddress}}/api/loans
+Accept: application/json

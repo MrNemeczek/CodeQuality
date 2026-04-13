@@ -1,0 +1,15 @@
+services:
+  library-db:
+    image: postgres:17-alpine
+    container_name: library-db
+    environment:
+      POSTGRES_DB: library_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - library_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  library_postgres_data:
