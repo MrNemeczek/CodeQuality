@@ -13,9 +13,19 @@ jobs:
     name: Build, test and analyze
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    if: ${{ vars.SONAR_PROJECT_KEY != '' && vars.SONAR_ORGANIZATION != '' && secrets.SONAR_TOKEN != '' }}
 
     steps:
+      - name: Validate SonarCloud configuration
+        env:
+          SONAR_PROJECT_KEY: ${{ vars.SONAR_PROJECT_KEY }}
+          SONAR_ORGANIZATION: ${{ vars.SONAR_ORGANIZATION }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          if [ -z "$SONAR_PROJECT_KEY" ] || [ -z "$SONAR_ORGANIZATION" ] || [ -z "$SONAR_TOKEN" ]; then
+            echo "Missing SonarCloud configuration. Set SONAR_PROJECT_KEY and SONAR_ORGANIZATION as repository variables and SONAR_TOKEN as a repository secret."
+            exit 1
+          fi
+
       - name: Check out repository
         uses: actions/checkout@v4
         with:
