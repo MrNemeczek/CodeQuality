@@ -73,7 +73,7 @@ jobs:
           dotnet sonarscanner begin \
             /k:"${{ vars.SONAR_PROJECT_KEY }}" \
             /o:"${{ vars.SONAR_ORGANIZATION }}" \
-            /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
+            /d:sonar.token="$SONAR_TOKEN" \
             /d:sonar.host.url="https://sonarcloud.io" \
             /d:sonar.qualitygate.wait=true \
             /d:sonar.cs.vstest.reportsPaths="**/*.trx" \
@@ -91,4 +91,4 @@ jobs:
         if: ${{ always() }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+        run: dotnet sonarscanner end /d:sonar.token="$SONAR_TOKEN"
