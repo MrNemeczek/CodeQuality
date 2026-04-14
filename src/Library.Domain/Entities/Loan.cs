@@ -67,6 +67,28 @@ public sealed class Loan
         ReturnedAtUtc = normalizedReturnedAtUtc;
     }
 
+    public void Extend(DateTime dueDateUtc)
+    {
+        if (IsReturned)
+        {
+            throw new DomainRuleException("Returned loan cannot be extended.");
+        }
+
+        var normalizedDueDateUtc = EnsureUtc(dueDateUtc);
+
+        if (normalizedDueDateUtc <= BorrowedAtUtc)
+        {
+            throw new DomainRuleException("Due date must be later than borrow date.");
+        }
+
+        if (normalizedDueDateUtc <= DueDateUtc)
+        {
+            throw new DomainRuleException("New due date must be later than current due date.");
+        }
+
+        DueDateUtc = normalizedDueDateUtc;
+    }
+
     private static DateTime EnsureUtc(DateTime value)
     {
         return value.Kind switch

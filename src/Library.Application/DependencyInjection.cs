@@ -8,6 +8,7 @@ using Library.Application.Books.Queries.GetBookById;
 using Library.Application.Books.Queries.GetBooks;
 using Library.Application.Loans;
 using Library.Application.Loans.Commands.BorrowBook;
+using Library.Application.Loans.Commands.ExtendLoan;
 using Library.Application.Loans.Commands.ReturnBook;
 using Library.Application.Loans.Queries.GetActiveLoans;
 using Library.Application.Loans.Queries.GetReaderLoans;
@@ -36,6 +37,7 @@ public static class DependencyInjection
         services.AddScoped<IQueryHandler<GetReadersQuery, IReadOnlyCollection<ReaderDto>>, GetReadersQueryHandler>();
 
         services.AddScoped<ICommandHandler<BorrowBookCommand, LoanDto>, BorrowBookCommandHandler>();
+        services.AddScoped<ICommandHandler<ExtendLoanCommand, LoanDto>, ExtendLoanCommandHandler>();
         services.AddScoped<ICommandHandler<ReturnBookCommand, LoanDto>, ReturnBookCommandHandler>();
         services.AddScoped<IQueryHandler<GetActiveLoansQuery, IReadOnlyCollection<LoanDto>>, GetActiveLoansQueryHandler>();
         services.AddScoped<IQueryHandler<GetReaderLoansQuery, IReadOnlyCollection<LoanDto>>, GetReaderLoansQueryHandler>();

@@ -2,6 +2,7 @@ using Library.Api.Contracts.Loans;
 using Library.Application.Abstractions.Messaging;
 using Library.Application.Loans;
 using Library.Application.Loans.Commands.BorrowBook;
+using Library.Application.Loans.Commands.ExtendLoan;
 using Library.Application.Loans.Commands.ReturnBook;
 using Library.Application.Loans.Queries.GetActiveLoans;
 using Microsoft.AspNetCore.Mvc;
@@ -32,6 +33,17 @@ public sealed class LoansController : ControllerBase
         CancellationToken cancellationToken)
     {
         var result = await handler.HandleAsync(new ReturnBookCommand(id), cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpPatch("{id:guid}/extend")]
+    public async Task<ActionResult<LoanDto>> Extend(
+        Guid id,
+        [FromBody] ExtendLoanRequest request,
+        [FromServices] ICommandHandler<ExtendLoanCommand, LoanDto> handler,
+        CancellationToken cancellationToken)
+    {
+        var result = await handler.HandleAsync(new ExtendLoanCommand(id, request.DueDate), cancellationToken);
         return Ok(result);
     }
 
